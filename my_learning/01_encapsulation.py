@@ -5,6 +5,9 @@ Private Attributes: Indicated by double underscores (__). Not accessible from ou
 """
 
 class Employee:
+    # Static attribute to count the number of employees
+    employee_count = 0
+
     def __init__(self, name, salary):
         self.name = name              # Public attribute
         self._department = "HR"      # Protected attribute
@@ -18,6 +21,10 @@ class Employee:
         print(f"Department: {self._department}")
         print(f"Salary: {self.get_salary()}")
 
+    @staticmethod
+    def calculate_annual_salary(hourly_wage, hours_per_week):
+        """Calculate the annual salary based on hourly wage and hours worked per week."""
+        return hourly_wage * hours_per_week * 52  # Assuming 52 weeks in a year
 # Usage
 emp = Employee("Alice", 50000)
 emp.display_info()

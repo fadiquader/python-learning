@@ -4,6 +4,17 @@ without exposing the underlying structure.
 An iterator implements two methods: __iter__() and __next__().
 """
 
+"""
+Python has a built-in function called iter(). When you pass it a
+collection, you get back an iterator object. Python effectively does under the hood is call
+iter() on that collection.
+"""
+
+numbers = [1, 2, 3, 4, 5]
+numbers_iter = iter(numbers)
+for num in numbers_iter:
+    print(num)
+
 class Countdown:
     def __init__(self, start):
         self.current = start

@@ -68,3 +68,15 @@ def count_words(filename):
         print(f"{key}: {dict1[key]}")
 
     return dict1
+
+# Assigment expression
+def matching_lines_from_file(path, pattern):
+    with open(path) as handle:
+        while (line := handle.readline()) != '':
+            print(line)
+
+# generator
+def lines_from_file(path):
+    with open(path) as handle:
+        for line in handle:
+            yield line.rstrip('\n')
