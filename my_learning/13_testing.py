@@ -1,7 +1,5 @@
-import os
 import unittest
-import shutil
-import tempfile
+from unittest.mock import Mock
 
 # Example one
 class Angel:
@@ -203,8 +201,40 @@ class TestBankingSystemWithFixtures(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             self.bank.transfer("Alice", "Charlie", 10)  # Non-existent account
-# Example four
 
+# Integration Testing
+def fetch_data(api_client):
+    data = api_client.get_data()
+    return data
+
+class UserRepository:
+    def __init__(self, db_client):
+        self.db_client = db_client
+
+    def get_user(self, user_id):
+        return self.db_client.query_user(user_id)
+
+class TestFetchData(unittest.TestCase):
+    def test_fetch_data(self):
+        mock_client = Mock()
+        mock_client.get_data.return_value = {"key": "value"}
+        result = fetch_data(mock_client)
+        self.assertEqual(result, {"key": "value"})
+
+    def test_get_user(self):
+        # Create a mock for the database client
+        mock_db_client = Mock()
+        mock_db_client.query_user.return_value = {"name": "Bob", "age": 25}
+
+        user_repo = UserRepository(mock_db_client)
+
+        # Call the method
+        result = user_repo.get_user(1)
+
+        # Verify the result
+        self.assertEqual(result, {"name": "Bob", "age": 25})
+        # Ensure the query_user method was called with the correct argument
+        mock_db_client.query_user.assert_called_once_with(1)
 
 
 if __name__ == "__main__":
